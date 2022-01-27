@@ -22,6 +22,9 @@
     "dependencies": {},
     "devDependencies": {
         "@collboard/modules-sdk": "18.13.0",
-        "tslint": "^6.1.3"
+        "@types/uuid": "^8.3.4",
+        "spacetrim": "^0.7.0",
+        "tslint": "^6.1.3",
+        "uuid": "^8.3.2"
     }
 }
