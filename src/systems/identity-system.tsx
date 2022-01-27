@@ -111,3 +111,11 @@ const Value = styled.div`
         width: 100px;
     }
 `;
+
+/**
+ * TODO: Selectable text
+ * TODO: Copy to clipboard
+ * TODO: QR codes
+ * TODO: Hide
+ * TODO: Warning (technical+senzitive information)
+ */
