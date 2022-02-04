@@ -1,6 +1,5 @@
 # 🛠️ Collboard administration toolset
 
-About
 Micaceous set of modules to control [Collboard.com](https://collboard.com/) frontend app created via [@collboard/modules-sdk](https://www.npmjs.com/package/@collboard/modules-sdk).
 
 <!--Badges-->
