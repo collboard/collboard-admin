@@ -138,15 +138,6 @@ declareModule({
     },
 });
 
-function hasSubArray<T>(master: T[], sub: T[]): boolean {
-    return sub.every(
-        (
-            (i) => (v) =>
-                (i = master.indexOf(v, i) + 1)
-        )(0),
-    );
-}
-
 const KEY_NAMES: Partial<Record<IKey, string>> = {
     Control: 'Ctrl',
     ArrowUp: '↑',
