@@ -33,73 +33,119 @@ declareModule({
     async setup(systems) {
         const { controlSystem, extraJsxSystem } = await systems.request('controlSystem', 'extraJsxSystem');
 
+        const registration = Registration.void();
+
         const wheelControls = new BehaviorSubject<IShortcut>([]);
 
-        // !!! Add everything to registration
-        Registration.createEventListener({
-            element: window.document,
-            type: 'wheel',
-            listener: (event: WheelEvent) => {
-                /*
-              !!!
-              if (!isEventOnBoard(event)) {
-                  return;
-              }
-              */
+        registration.addSubdestroyable(
+            Registration.createEventListener({
+                element: window.document,
+                type: 'wheel',
+                listener: (event: WheelEvent) => {
+                    /* TODO:
+                    if (!isEventOnBoard(event)) {
+                        return;
+                    }
+                    */
 
-                async function add(key: IKey) {
-                    wheelControls.next([key]);
-                    //await forAnimationFrame();
-                    await forTime(500);
-                    wheelControls.next(wheelControls.value.filter((pressedKey) => pressedKey !== key));
-                }
+                    async function add(key: IKey) {
+                        wheelControls.next([key]);
+                        //await forAnimationFrame();
+                        await forTime(500);
+                        wheelControls.next(wheelControls.value.filter((pressedKey) => pressedKey !== key));
+                    }
 
-                if (event.deltaY > 0) {
-                    add('WheelDown');
-                } else if (event.deltaY < 0) {
-                    add('WheelUp');
-                }
+                    if (event.deltaY > 0) {
+                        add('WheelDown');
+                    } else if (event.deltaY < 0) {
+                        add('WheelUp');
+                    }
 
-                if (event.deltaX > 0) {
-                    add('WheelRight');
-                } else if (event.deltaX < 0) {
-                    add('WheelLeft');
-                }
+                    if (event.deltaX > 0) {
+                        add('WheelRight');
+                    } else if (event.deltaX < 0) {
+                        add('WheelLeft');
+                    }
 
-                event.preventDefault();
-            },
-            options: { passive: false },
-        });
+                    event.preventDefault();
+                },
+                options: { passive: false },
+            }),
+        );
 
         const pressedControls: Observable<IShortcut> = combineLatest(controlSystem.pressedKeys, wheelControls).pipe(
             map((controls) => controls.flat()),
         );
 
-        return extraJsxSystem.register({
-            order: -100,
-            place: ExtraJsxPlace.RootComponent,
-            jsx: (
-                <ObservableContentComponent
-                    alt="Currently pressed keys"
-                    content={pressedControls.pipe(
-                        map((pressedControlsValue) => {
-                            return (
-                                <Shortcut>
-                                    {pressedControlsValue.map((key, i) => (
-                                        <>
-                                            <Key key={key}>{displayKey(key)}</Key>
-                                            {i !== pressedControlsValue.length - 1 && <Separator>+</Separator>}
-                                        </>
-                                    ))}
-                                </Shortcut>
-                            );
-                        }),
-                    )}
-                />
-            ),
-        });
+        /*
+        const pressedControlsDebounced: Observable<IShortcut> = pressedControls.pipe(
+            debounce((shortcut) => (shortcut.length ? interval(0) : interval(100))),
+        );
+        */
+
+        /*
+        const pressedControlsX: Observable<{ shortcut: IShortcut; isCurrent: boolean }> = pressedControls
+            .pipe(debounce((shortcut) => interval(100)))
+            .pipe(
+                scan<IShortcut, { shortcut: IShortcut; isCurrent: boolean }>(
+                    (accumulator, shortcut, i) => {
+                        /*if (shortcut.length === 0) {
+                        return { shortcut: [], isCurrent: false };
+                    }* /
+                        if (
+                            !hasSubArray(accumulator.shortcut, shortcut)
+                            /*
+                        accumulator.shortcut.length <= shortcut.length ||
+                        (shortcut.length > 0 && shortcut[0] !== accumulator.shortcut[0])
+                        * /
+                        ) {
+                            return { shortcut, isCurrent: true };
+                        } else {
+                            return { shortcut: accumulator.shortcut, isCurrent: false };
+                        }
+                    },
+                    { shortcut: [], isCurrent: false },
+                ),
+            );
+        */
+
+        registration.addSubdestroyable(
+            extraJsxSystem.register({
+                place: ExtraJsxPlace.RootComponent,
+                jsx: (
+                    <ObservableContentComponent
+                        alt="Currently pressed keys"
+                        content={pressedControls.pipe(
+                            map((shortcut) => {
+                                return (
+                                    <Shortcut {...{ isCurrent: true }}>
+                                        {shortcut.map((key, i) => (
+                                            <>
+                                                <Key>{displayKey(key)}</Key>
+                                                {i !== shortcut.length - 1 && <Separator>+</Separator>}
+                                            </>
+                                        ))}
+                                    </Shortcut>
+                                );
+                            }),
+                        )}
+                    />
+                ),
+            }),
+        );
+
+        return registration;
     },
 });
+
+function hasSubArray<T>(master: T[], sub: T[]): boolean {
+    return sub.every(
+        (
+            (i) => (v) =>
+                (i = master.indexOf(v, i) + 1)
+        )(0),
+    );
+}
 
 const KEY_NAMES: Partial<Record<IKey, string>> = {
     Control: 'Ctrl',
@@ -111,6 +157,7 @@ const KEY_NAMES: Partial<Record<IKey, string>> = {
     WheelDown: '🖰↓',
     WheelLeft: '←🖰',
     WheelRight: '🖰→',
+    ' ': 'Space',
 };
 
 function displayKey(key: IKey): string {
@@ -121,18 +168,21 @@ function displayKey(key: IKey): string {
     }
 }
 
-const Shortcut = styled.div`
+const Shortcut = styled.div<{ isCurrent: boolean }>`
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+
     pointer-events: none;
+
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;s
 
-    opacity: 0.8;
+    opacity: ${({ isCurrent }: { isCurrent: boolean }) => (isCurrent ? '0.8' : '0')};
+    transition: opacity ${({ isCurrent }: { isCurrent: boolean }) => (isCurrent ? '0' : '0.3')}s ease-in-out;
 
     font-size: 3em;
 
