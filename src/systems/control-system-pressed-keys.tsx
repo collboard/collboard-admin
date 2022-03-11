@@ -15,7 +15,7 @@ import { contributors, license, repository, version } from '../../package.json';
 
 declareModule({
     manifest: {
-        name: '@systems/control-system',
+        name: '@systems/control-system-pressed-keys',
         version,
         icon: `🎹`,
         title: {
