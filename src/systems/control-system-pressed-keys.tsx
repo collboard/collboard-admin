@@ -50,7 +50,7 @@ declareModule({
 
                     async function add(key: IKey) {
                         wheelControls.next([key]);
-                        //await forAnimationFrame();
+                        // await forAnimationFrame();
                         await forTime(500);
                         wheelControls.next(wheelControls.value.filter((pressedKey) => pressedKey !== key));
                     }
