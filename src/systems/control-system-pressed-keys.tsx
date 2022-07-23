@@ -1,6 +1,6 @@
 import {
     declareModule,
-    ExtraJsxPlace,
+    UserInterfaceElementPlace,
     IKey,
     IShortcut,
     ObservableContentComponent,
@@ -31,7 +31,7 @@ declareModule({
         repository,
     },
     async setup(systems) {
-        const { controlSystem, extraJsxSystem } = await systems.request('controlSystem', 'extraJsxSystem');
+        const { controlSystem, userInterfaceSystem } = await systems.request('controlSystem', 'userInterfaceSystem');
 
         const registration = Registration.void();
 
@@ -110,9 +110,10 @@ declareModule({
         */
 
         registration.addSubdestroyable(
-            extraJsxSystem.register({
-                place: ExtraJsxPlace.RootComponent,
-                jsx: (
+            userInterfaceSystem.registerElement({
+                systems,
+                place: UserInterfaceElementPlace.RootComponent,
+                element: (
                     <ObservableContentComponent
                         alt="Currently pressed keys"
                         content={pressedControls.pipe(
