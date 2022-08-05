@@ -21,7 +21,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@collboard/modules-sdk": "26.8.0",
+        "@collboard/modules-sdk": "27.0.200",
         "@types/uuid": "8.3.4",
         "destroyable": "0.9.0",
         "rxjs": "6.6.3",
