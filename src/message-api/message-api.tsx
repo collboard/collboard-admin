@@ -5,7 +5,8 @@ import { MessageApiComponent } from './MessageApiComponent';
 declareModule(
     makeModalModule({
         manifest: {
-            name: '@admin/message-api',
+            name: '@systems/messages-api',
+            // TODO: Temporarirly disabled due to multiple scopes from one package error> name: '@admin/message-api',
             version,
             description,
             contributors,

@@ -20,6 +20,7 @@ export const MessageApiStyle = styled.div`
 
     .response {
         border: 1px solid green;
+        display: none;
     }
 
     .button {
