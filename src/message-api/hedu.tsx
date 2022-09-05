@@ -11,8 +11,8 @@ import { problem1 } from './heduContent';
 declareModule(
     makeUserInterfaceModule({
         manifest: {
-            name: '@systems/messages-api/hedu',
-            // TODO: Temporarirly disabled due to multiple scopes from one package error> name: '@admin/message-api',
+            name: '@systems/messages-api-hedu',
+            // TODO: Temporarirly disabled due to multiple scopes from one package error> name: '@hedu/test-message-api',
             version,
             description,
             contributors,
