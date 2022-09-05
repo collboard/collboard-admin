@@ -1,3 +1,4 @@
+import './message-api/hedu';
 import './message-api/message-api';
 import './systems/control-system';
 import './systems/control-system-pressed-keys';
