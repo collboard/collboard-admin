@@ -53,3 +53,8 @@ const Key = styled.div`
     background-color: #666;
     color: #fff;
 `;
+
+
+/**
+ * TODO: Allow to override the shortcuts
+ */
