@@ -1,9 +1,9 @@
 import {
     AsyncButtonComponent,
-    declareModule,
-    makeUserInterfaceModule,
     React,
     UserInterfaceElementPlace,
+    declareModule,
+    makeUserInterfaceModule,
 } from '@collboard/modules-sdk';
 import { contributors, description, license, repository, version } from '../../package.json';
 import { problem1 } from './heduContent';
@@ -24,7 +24,7 @@ declareModule(
             },
         },
         place: UserInterfaceElementPlace.EdgeTop,
-        async createElement(systems) {
+        async render(systems) {
             await systems.request('messagesApiSystem');
 
             return (
