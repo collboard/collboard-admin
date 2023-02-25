@@ -1,11 +1,9 @@
 import {
-    declareModule,
-    UserInterfaceElementPlace,
-    IKey,
-    IShortcut,
-    ObservableContentComponent,
-    React,
-    styled,
+  declareModule, IKey,
+  IShortcut,
+  ObservableContentComponent,
+  React,
+  styled, UserInterfaceElementPlace
 } from '@collboard/modules-sdk';
 import { Registration } from 'destroyable';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';

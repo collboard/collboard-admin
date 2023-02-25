@@ -1,9 +1,7 @@
 import {
-    AsyncButtonComponent,
-    React,
-    UserInterfaceElementPlace,
-    declareModule,
-    makeUserInterfaceModule,
+  AsyncButtonComponent, declareModule,
+  makeUserInterfaceModule, React,
+  UserInterfaceElementPlace
 } from '@collboard/modules-sdk';
 import { contributors, description, license, repository, version } from '../../package.json';
 import { problem1 } from './heduContent';
