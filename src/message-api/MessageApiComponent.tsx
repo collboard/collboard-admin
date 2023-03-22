@@ -36,7 +36,7 @@ export function MessageApiComponent() {
                     const message = JSON.parse(textarea.current!.textContent!);
                     window.postMessage(message);
 
-                    // !!! Use here await messagesApiSystem.sendMessage;
+                    // TODO: !!! Use here await messagesApiSystem.sendMessage;
                 }}
             >
                 Post
