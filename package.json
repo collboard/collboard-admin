@@ -22,7 +22,7 @@
     "devDependencies": {
         "@collboard/modules-sdk": "35.12.0",
         "@types/uuid": "8.3.4",
-        "destroyable": "0.12.9",
+        "destroyable": "^0.12.10",
         "rxjs": "6.6.3",
         "spacetrim": "0.9.11",
         "tslint": "6.1.3",
