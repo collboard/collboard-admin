@@ -24,7 +24,7 @@
         "@types/uuid": "8.3.4",
         "destroyable": "^0.12.11",
         "rxjs": "6.6.3",
-        "spacetrim": "0.9.12",
+        "spacetrim": "^0.9.13",
         "tslint": "6.1.3",
         "uuid": "8.3.2",
         "waitasecond": "^1.11.25"
