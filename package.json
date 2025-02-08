@@ -1,6 +1,6 @@
 {
     "name": "@collboard/collboard-admin",
-    "version": "0.7.168",
+    "version": "0.7.169",
     "description": "Micaceous set of modules to control Collboard.com frontend app",
     "license": "SEE LICENSE IN LICENSE",
     "contributors": [
